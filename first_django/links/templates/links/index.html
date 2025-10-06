@@ -1,0 +1,11 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+<h1 class="text-red-400">Wellcome to ShorterLink</h1>
+<ol>
+    {% for link in links %}
+    <li>{{link.name}} - {{link.url}} - {{link.clicks}}</li>
+    
+    {% endfor  %}
+</ol>
+{% endblock  %}

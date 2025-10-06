@@ -1,0 +1,46 @@
+{% extends "_layout.html" %}
+
+<html>
+    <body>
+        {% comment %} <></> {% endcomment %}
+        {% block content %} 
+        <h1>Registered users</h1>
+        <h3>{{name}}</h3>
+        {% if users %}
+            <ul>
+                {% for user in users %}
+                    <li>
+                        <span style="width:150px; display:inline-block">
+                            {{user.fullname}}
+                        </span>
+                        <span style="width:150px; display:inline-block">
+                            {{user.dob}}
+                        </span>
+                        <span style="width:150px; display:inline-block">
+                            {{user.email}}
+                        </span>
+                        <span style="width:150px; display:inline-block">
+                            {{user.country|upper}}
+                        </span>
+
+                        {% load humanize %}
+                        <span style="width:150px; display:inline-block">
+                            {{"15400"|intcomma}}
+                        </span>
+
+                        <span style="width:150px; display:inline-block">
+                            <a href="{{user.id}}">
+                                Profile ↗️
+                            </a>
+                        </span>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No user registered yet</p>
+            {% endif %}
+        {% endblock %}
+    </body>
+
+</html>
+

@@ -1,0 +1,16 @@
+{% extends "_layout.html" %}
+
+<html>
+    <body>
+        {% block content %} 
+        <h1>Wellcome to <span style="color:red">{{profile.fullname}}</span>'s profile</h1>
+        {% comment %} <></> {% endcomment %}
+        <p>Born in: {{profile.dob}}</p>
+        <p>Email: {{profile.email}}</p>
+        <p>Country: {{profile.country}}</p>
+        
+        {% endblock %}
+    </body>
+
+</html>
+
