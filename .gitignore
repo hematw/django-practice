@@ -12,3 +12,7 @@ static/
 venv/
 Scripts/
 Lib/
+lib
+lib64
+bin
+include

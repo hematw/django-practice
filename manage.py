@@ -3,6 +3,8 @@
 import os
 import sys
 
+# django-admin credentials
+# username: hemat pass: password
 
 def main():
     """Run administrative tasks."""

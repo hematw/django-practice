@@ -1,0 +1,43 @@
+{% extends "_layout.html" %} {% block content %}
+<div
+  class="max-w-2xl mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg border border-gray-100"
+>
+  <h1 class="text-3xl font-bold text-emerald-600 text-center mb-6">
+    Welcome to ShorterLink
+  </h1>
+
+  {% if links %}
+  <ol class="space-y-3">
+    {% for link in links %}
+    <li
+      class="flex justify-between items-center bg-gray-50 hover:bg-emerald-50 transition rounded-xl p-3 shadow-sm"
+    >
+      <div>
+        <p class="font-semibold text-gray-800">{{ link.name }}</p>
+        <a
+          href="{{ link.url }}"
+          target="_blank"
+          class="text-sm text-emerald-600 hover:underline"
+        >
+          {{ link.url }}
+        </a>
+      </div>
+      <div class="flex items-center gap-2 text-xs font-medium">
+        <a
+          target="_blank    "
+          href="{% url 'root_link' link.slug %}"
+          class="bg-emerald-400 text-white rounded-xl px-3 py-1"
+          >Go to {{link.name}}</a
+        >
+        <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full">
+          {{ link.clicks }} clicks
+        </span>
+      </div>
+    </li>
+    {% endfor %}
+  </ol>
+  {% else %}
+  <p class="text-center text-gray-500">No links added yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

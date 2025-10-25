@@ -1,0 +1,16 @@
+{% extends "_layout.html" %}
+
+{% block content %}
+  <div class="max-w-xl mx-auto mt-10 bg-white shadow-md rounded-xl p-6 border border-gray-200">
+    <h1 class="text-2xl font-bold text-gray-800 mb-4">
+      Welcome to 
+      <span class="text-red-600">{{ profile.fullname }}</span>'s profile
+    </h1>
+
+    <div class="space-y-2 text-gray-700">
+      <p><span class="font-medium">Born in:</span> {{ profile.dob }}</p>
+      <p><span class="font-medium">Email:</span> {{ profile.email }}</p>
+      <p><span class="font-medium">Country:</span> {{ profile.country }}</p>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "_layout.html" %}
+{% load tailwind_filters %}
+
+{% block content %}
+<div class="max-w-xl mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg border border-gray-100">
+  <h1 class="text-2xl font-semibold text-emerald-600 text-center mb-6">
+    Add New Link
+  </h1>
+
+  <form method="POST" action="{% url 'add-link' %}" class="space-y-4">
+    {% csrf_token %}
+
+    {{ form|crispy }}
+    {% comment %} <div>
+      <label for="name" class="block text-gray-700 font-medium mb-1">Name</label>
+      <input type="text" name="name" id="name" placeholder="My website" 
+             class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+    </div>
+
+    <div>
+      <label for="url" class="block text-gray-700 font-medium mb-1">URL</label>
+      <input type="url" name="url" id="url" placeholder="https://example.com" 
+             class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+    </div>
+
+    <div>
+      <label for="slug" class="block text-gray-700 font-medium mb-1">Slug</label>
+      <input type="text" name="slug" id="slug" placeholder="my-link" 
+             class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+    </div> {% endcomment %}
+
+    <button type="submit" 
+            class="w-full bg-emerald-600 text-white font-semibold py-2 rounded-lg hover:bg-emerald-700 transition">
+      Add Link
+    </button>
+  </form>
+</div>
+{% endblock content %}
