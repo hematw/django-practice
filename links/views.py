@@ -30,7 +30,7 @@ def add_link(request):
     return render(request, "links/add_link.html", context)
 
 def redir_link(request, link_slug):
-    # link = Link.objects.get_object_or
+    # link = Link.objects.get(slug=link_slug)
     link = get_object_or_404(Link, slug=link_slug)
     link.click()
     return redirect(link.url)
