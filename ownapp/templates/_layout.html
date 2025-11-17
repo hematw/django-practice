@@ -1,40 +1,229 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Site</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>My Site</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
 
-  <body class="bg-gray-50 text-gray-800 font-sans">
-    <!-- Navbar -->
-    <nav class="bg-white shadow-md px-6 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-6">
-        <a href="{% url 'home' %}" class="text-lg font-semibold text-blue-600 hover:text-blue-800 transition">
-          Home
-        </a>
-        <a href="{% url 'users' %}" class="text-gray-700 hover:text-blue-600 transition">Users</a>
-        <a href="{% url 'add-user' %}" class="text-gray-700 hover:text-blue-600 transition">Add User</a>
-        <a href="{% url 'about' %}" class="text-gray-700 hover:text-blue-600 transition">About</a>
-        <a href="{% url 'links' %}" class="text-gray-700 hover:text-blue-600 transition">ShorterLink</a>
-        <a href="{% url 'add-link' %}" class="text-gray-700 hover:text-blue-600 transition">Add Link</a>
-      </div>
+    <body class="bg-gray-50 text-gray-800 font-sans">
+        <!-- Navbar -->
+        <nav
+            class="bg-white shadow-md px-6 py-4 flex items-center justify-between"
+        >
+            <div class="flex items-center gap-6">
+                <a
+                    href="{% url 'home' %}"
+                    class="text-lg font-semibold text-blue-600 hover:text-blue-800 transition"
+                >
+                    Home
+                </a>
+                <a
+                    href="{% url 'users' %}"
+                    class="text-gray-700 hover:text-blue-600 transition"
+                    >Users</a
+                >
+                <a
+                    href="{% url 'add-user' %}"
+                    class="text-gray-700 hover:text-blue-600 transition"
+                    >Add User</a
+                >
+                <a
+                    href="{% url 'about' %}"
+                    class="text-gray-700 hover:text-blue-600 transition"
+                    >About</a
+                >
+                <a
+                    href="{% url 'links' %}"
+                    class="text-gray-700 hover:text-blue-600 transition"
+                    >ShorterLink</a
+                >
+                <a
+                    href="{% url 'add-link' %}"
+                    class="text-gray-700 hover:text-blue-600 transition"
+                    >Add Link</a
+                >
 
-      <!-- Optional logo or right section -->
-      <div>
-        <span class="text-sm text-gray-500">v1.0</span>
-      </div>
-    </nav>
+                <!-- Plants dropdown (works on hover + click/tap) -->
+                <div class="relative" x-data>
+                    <button
+                        id="plantsDropdownBtn"
+                        type="button"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        class="flex items-center gap-2 text-gray-700 hover:text-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-300 rounded"
+                        onclick="toggleDropdown(event, 'plantsDropdown')"
+                        onkeydown="dropdownKeyHandler(event, 'plantsDropdown')"
+                    >
+                        Plants
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-4 h-4"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M19 9l-7 7-7-7"
+                            />
+                        </svg>
+                    </button>
 
-    <!-- Page Content -->
-    <main class="max-w-5xl mx-auto mt-10 px-6">
-      {% block content %}
-      {% endblock %}
-    </main>
+                    <!-- Menu -->
+                    <div
+                        id="plantsDropdown"
+                        role="menu"
+                        aria-labelledby="plantsDropdownBtn"
+                        class="hidden absolute left-0 mt-2 w-44 bg-white border rounded-lg shadow-lg py-1 z-50"
+                        onkeydown="dropdownKeyHandler(event, 'plantsDropdown')"
+                    >
+                        <a
+                            href="{% url 'link_list' %}"
+                            role="menuitem"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition"
+                            >Plant Links</a
+                        >
+                        <a
+                            href="{% url 'link_plant_add' %}"
+                            role="menuitem"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition"
+                            >Add Plant Links</a
+                        >
+                    </div>
+                </div>
+                <!-- end dropdown -->
+            </div>
 
-    <!-- Footer -->
-    <footer class="text-center text-sm text-gray-500 mt-16 py-6 border-t">
-      © {{ current_year|default:2025 }} My Website. All rights reserved.
-    </footer>
-  </body>
+            <div>
+                <span class="text-sm text-gray-500">v1.0</span>
+            </div>
+        </nav>
+
+        <script>
+            /* Small, dependency-free JS to toggle dropdown and handle outside click & keyboard */
+            (function () {
+                window.toggleDropdown = function (evt, id) {
+                    evt.stopPropagation();
+                    const el = document.getElementById(id);
+                    const btn = document.getElementById("plantsDropdownBtn");
+
+                    const isHidden = el.classList.contains("hidden");
+                    // close any other open dropdowns
+                    document.querySelectorAll('[role="menu"]').forEach((m) => {
+                        if (m !== el) {
+                            m.classList.add("hidden");
+                            const btnId = m.getAttribute("aria-labelledby");
+                            if (btnId)
+                                document
+                                    .getElementById(btnId)
+                                    ?.setAttribute("aria-expanded", "false");
+                        }
+                    });
+
+                    if (isHidden) {
+                        el.classList.remove("hidden");
+                        btn.setAttribute("aria-expanded", "true");
+                        // focus first item for keyboard users
+                        setTimeout(
+                            () =>
+                                el.querySelector('[role="menuitem"]')?.focus(),
+                            10
+                        );
+                    } else {
+                        el.classList.add("hidden");
+                        btn.setAttribute("aria-expanded", "false");
+                    }
+                };
+
+                window.dropdownKeyHandler = function (evt, id) {
+                    const el = document.getElementById(id);
+                    const items = Array.from(
+                        el.querySelectorAll('[role="menuitem"]')
+                    );
+                    const index = items.indexOf(document.activeElement);
+
+                    if (evt.key === "Escape") {
+                        el.classList.add("hidden");
+                        document
+                            .getElementById(el.getAttribute("aria-labelledby"))
+                            ?.setAttribute("aria-expanded", "false");
+                        document
+                            .getElementById(el.getAttribute("aria-labelledby"))
+                            ?.focus();
+                    } else if (evt.key === "ArrowDown") {
+                        evt.preventDefault();
+                        const next =
+                            items[(index + 1) % items.length] || items[0];
+                        next.focus();
+                    } else if (evt.key === "ArrowUp") {
+                        evt.preventDefault();
+                        const prev =
+                            items[(index - 1 + items.length) % items.length] ||
+                            items[items.length - 1];
+                        prev.focus();
+                    } else if (evt.key === "Enter" || evt.key === " ") {
+                        // allow button to toggle on Space/Enter
+                        if (document.activeElement.id === "plantsDropdownBtn") {
+                            evt.preventDefault();
+                            toggleDropdown(evt, id);
+                        }
+                    }
+                };
+
+                // close on outside click or Escape globally
+                document.addEventListener("click", function (e) {
+                    document.querySelectorAll('[role="menu"]').forEach((m) => {
+                        if (
+                            !m.classList.contains("hidden") &&
+                            !m.contains(e.target) &&
+                            document.getElementById(
+                                m.getAttribute("aria-labelledby")
+                            ) !== e.target
+                        ) {
+                            m.classList.add("hidden");
+                            const btnId = m.getAttribute("aria-labelledby");
+                            if (btnId)
+                                document
+                                    .getElementById(btnId)
+                                    ?.setAttribute("aria-expanded", "false");
+                        }
+                    });
+                });
+
+                document.addEventListener("keydown", function (e) {
+                    if (e.key === "Escape") {
+                        document
+                            .querySelectorAll('[role="menu"]')
+                            .forEach((m) => {
+                                if (!m.classList.contains("hidden")) {
+                                    m.classList.add("hidden");
+                                    const btnId =
+                                        m.getAttribute("aria-labelledby");
+                                    if (btnId)
+                                        document
+                                            .getElementById(btnId)
+                                            ?.setAttribute(
+                                                "aria-expanded",
+                                                "false"
+                                            );
+                                }
+                            });
+                    }
+                });
+            })();
+        </script>
+
+        <!-- Page Content -->
+        <main class="max-w-5xl mx-auto mt-10 px-6">
+            {% block content %} {% endblock %}
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center text-sm text-gray-500 mt-16 py-6 border-t">
+            © {{ current_year|default:2025 }} My Website. All rights reserved.
+        </footer>
+    </body>
 </html>

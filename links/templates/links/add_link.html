@@ -1,4 +1,4 @@
-{% extends "_layout.html" %}
+{% extends "_layout.htcrispyml" %}
 {% load tailwind_filters %}
 
 {% block content %}
@@ -10,7 +10,7 @@
   <form method="POST" action="{% url 'add-link' %}" class="space-y-4">
     {% csrf_token %}
 
-    {{ form|crispy }}
+    {{ form| }}
     {% comment %} <div>
       <label for="name" class="block text-gray-700 font-medium mb-1">Name</label>
       <input type="text" name="name" id="name" placeholder="My website" 
