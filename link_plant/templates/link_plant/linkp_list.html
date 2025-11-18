@@ -1,29 +1,41 @@
-{% extends "_layout.html" %}
-{% block content %}
+{% extends "_layout.html" %} {% block content %}
 
 <div class="max-w-2xl mx-auto mt-10">
     <h2 class="text-2xl font-semibold mb-4">Links</h2>
 
     <ul class="space-y-3">
         {% for link in object_list %}
-            <li class="p-4 bg-white shadow rounded-lg border flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                
-                <div>
-                    <p class="text-lg font-medium text-gray-800">{{ link.text }}</p>
-                    <a href="{{ link.url }}" class="text-blue-600 hover:underline break-all">
-                        {{ link.url }}
-                    </a>
-                    <p class="text-gray-500 text-sm">{{ link.profile }}</p>
-                </div>
+        <li
+            class="p-4 bg-white shadow rounded-lg border flex flex-col sm:flex-row sm:items-center sm:justify-between"
+        >
+            <div>
+                <p class="text-lg font-medium text-gray-800">{{ link.text }}</p>
+                <a
+                    href="{{ link.url }}"
+                    class="text-blue-600 hover:underline break-all"
+                >
+                    {{ link.url }}
+                </a>
+                <a href="{% url "profile" link.profile.slug %}" class="text-gray-500 text-sm">{{ link.profile }}</a>
+            </div>
 
-                {% comment %} <a href="{% url 'link-update' link.id %}"  {% endcomment %}
-                <a href="" 
-                   class="mt-3 sm:mt-0 inline-block px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition">
+            <div class="flex items-center gap-2">
+                <a
+                    href="{% url 'link_plant_update' link.id %}"
+                    class="mt-3 sm:mt-0 inline-block px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
+                >
                     Edit
                 </a>
-            </li>
+                <a
+                    href="{% url 'link_plant_delete' link.id %}"
+                    class="mt-3 sm:mt-0 inline-block px-4 py-2 text-sm font-medium rounded-lg bg-red-500 text-white hover:bg-red-600 transition"
+                >
+                    Delete
+                </a>
+            </div>
+        </li>
         {% empty %}
-            <p class="text-gray-500">No links available.</p>
+        <p class="text-gray-500">No links available.</p>
         {% endfor %}
     </ul>
 </div>

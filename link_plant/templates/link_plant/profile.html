@@ -1,0 +1,8 @@
+<div>
+    <h1>{{profile.name}}</h1>
+    <ul>
+        {% for link in links %}
+        <li>{{link.text}} {{link.url}}</li>
+        {% endfor %}
+    </ul>
+</div>
