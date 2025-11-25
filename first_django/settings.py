@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     # Local apps
     "ownapp",
     "links",
-    "link_plant"
+    "link_plant",
+    "trips"
 ]
 
 MIDDLEWARE = [

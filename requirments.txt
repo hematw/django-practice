@@ -5,3 +5,4 @@ tzdata==2025.2
 Faker
 django-crispy-forms
 crispy-tailwind
+Pillow-12.0.0
