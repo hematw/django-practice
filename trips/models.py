@@ -8,8 +8,8 @@ from django.core.validators import MaxValueValidator
 class Trip(models.Model):
     city = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
-    start_date = models.DateField()
-    end_date = models.DateField()
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name="trips")
 
     def __str__(self):

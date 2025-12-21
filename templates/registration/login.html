@@ -1,0 +1,21 @@
+<ht></ht>
+{% if form.error %}
+<p>Login failed username or password was wrong</p>
+{% endif %}
+
+{% if next %}
+    {% if not user.is_authenticated %}
+        <p>Plean login first</p>
+
+    {% endif %}
+  
+{% endif %}
+
+
+<form action="{% url 'login' %}" method="POST">
+{% csrf_token %}
+
+    {{form.as_p}}
+    <input type="submit" value="Login" />
+    <input type="hidden" name="next" value="{{next}}" />
+</form>
